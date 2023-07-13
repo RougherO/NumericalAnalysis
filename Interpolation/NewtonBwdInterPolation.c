@@ -26,15 +26,15 @@ double NBI(unsigned int sizeofDataPoints, double (*dataPoints)[sizeofDataPoints]
     // Generate the intrapolation table
     double* table = generateTable(dataPoints[1], sizeofDataPoints);
 
-    // f_x is the resultant value, product is the numerator part => (x - x1) * (x - x2) .... (x - x(n - 1))
-    // interval is the equivalent distance between the x values
-    double fx = 0, factorial = 1, product = 1, interval = dataPoints[0][1] - dataPoints[0][0];
+    // f_x is the resultant value
+    // p is the p in formula Sorry can't explain this :P
+    double fx = dataPoints[1][sizeofDataPoints - 1], factorial = 1;
+    double p = (x - dataPoints[0][sizeofDataPoints - 1]) / (dataPoints[0][1] - dataPoints[0][0]);
 
-    for (int i = 0; i < sizeofDataPoints; ++i) {
-        fx += (table[i * sizeofDataPoints + sizeofDataPoints - 1] * product) / (factorial * interval);
+    for (int i = 1; i < sizeofDataPoints; ++i) {
+        fx += p / factorial * table[i * sizeofDataPoints + sizeofDataPoints - 1];
         factorial *= i + 1;
-        product *= (x - dataPoints[0][sizeofDataPoints - 1 - i]);
-        interval *= interval;
+        p *= p + i;
     }
 
     free(table);

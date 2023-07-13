@@ -13,12 +13,10 @@ double SimpInt(double llimit, double ulimit, unsigned int division)
     // Storing f(x0) + f(xn) first
     double val = func(llimit) + func(ulimit);
 
-    // Iterating while i < N - 1 as we add
-    // 4 * f(lower + (N - 1) * (b - a) / N) at the end
-    for (int i = 1; i + 1 < division; i += 2) {
-        val += 4 * func(llimit + i * interval) + 2 * func(llimit + (i + 1) * interval);
+    // Going from 1 to division because first and last value are already accounted for
+    for (int i = 1; i < division; ++i) {
+        val += i % 2 ? 4 * func(llimit + i * interval) : 2 * func(llimit + i * interval);
     }
-    val += 4 * func(ulimit - interval); // 4 * func(llimit + (N - 1) * interval)
 
     // Mulitplying by 1/3 * (b - a) / N
     val *= interval / 3;
@@ -46,5 +44,5 @@ int main()
         scanf("%u", &division);
     }
 
-    printf("Result : %lf", SimpInt(llimit, ulimit, division));
+    printf("Result : %lf\n", SimpInt(llimit, ulimit, division));
 }

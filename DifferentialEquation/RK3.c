@@ -12,7 +12,7 @@ double RK3(double x, double fx, double val, double h)
     while (x1 < val) {
         k1 = funcDash(x1, fx1);
         k2 = funcDash(x1 + (h / 2), fx1 + (h / 2) * k1);
-        k3 = funcDash(x1 + h, fx1 + 2 * k2 - k1);
+        k3 = funcDash(x1 + h, fx1 + h * (2 * k2 - k1));
         fx1 = fx1 + (h / 6) * (k1 + 4 * k2 + k3);
         x1 = x1 + h;
     }
